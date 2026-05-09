@@ -99,8 +99,8 @@ export default function PublishPanel({ video }: Props) {
       <HUDPanel title="Platform Connections" tag="AUTH">
         <div className="space-y-2">
           {[
-            { id: 'google', name: 'Google / YouTube', connected: ytConnected, authUrl: '/api/youtube/auth' },
-            { id: 'tiktok', name: 'TikTok', connected: ttConnected, authUrl: '/api/tiktok/auth' },
+            { id: 'google', name: 'Google / YouTube', connected: ytConnected, authUrl: '/api/youtube' },
+            { id: 'tiktok', name: 'TikTok', connected: ttConnected, authUrl: '/api/tiktok' },
           ].map(p => (
             <div key={p.id} className="flex items-center justify-between p-3 hud-panel">
               <div className="flex items-center gap-2">

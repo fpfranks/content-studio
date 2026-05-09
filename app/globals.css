@@ -17,6 +17,24 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile safe area and touch improvements */
+input, textarea, select, button {
+  font-size: 16px; /* prevents iOS zoom on focus */
+}
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Disable canvas animation on mobile for battery */
+@media (max-width: 768px) {
+  canvas { display: none !important; }
+  .orb { display: none !important; }
+  .scan-sweep { display: none !important; }
 }
 
 html, body {

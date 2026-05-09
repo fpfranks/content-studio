@@ -133,6 +133,33 @@ export default function AIStudio({ videoName }: Props) {
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
           >
+            {/* Copy everything button */}
+            <button
+              onClick={() => {
+                const all = [
+                  '=== TITLES ===',
+                  content.titles.join('\n'),
+                  '\n=== HOOKS ===',
+                  content.hooks.join('\n'),
+                  '\n=== YOUTUBE DESCRIPTION ===',
+                  content.descriptions.youtube,
+                  '\n=== TIKTOK CAPTION ===',
+                  content.descriptions.tiktok,
+                  '\n=== YOUTUBE HASHTAGS ===',
+                  content.hashtags.youtube.join(' '),
+                  '\n=== TIKTOK HASHTAGS ===',
+                  content.hashtags.tiktok.join(' '),
+                  '\n=== CAPTIONS ===',
+                  content.captions.join('\n'),
+                ].join('\n')
+                navigator.clipboard.writeText(all)
+                toast.success('All content copied')
+              }}
+              className="glow-btn glow-btn-solid w-full py-2.5 text-xs tracking-widest flex items-center justify-center gap-2"
+            >
+              <Copy className="w-4 h-4" /> COPY EVERYTHING
+            </button>
+
             {/* Titles */}
             <CollapsibleSection
               id="titles"

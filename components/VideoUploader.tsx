@@ -96,14 +96,9 @@ export default function VideoUploader({ onVideoReady, video }: Props) {
                   </div>
                   <div className="text-center">
                     <p className="text-neon-cyan text-sm font-mono">
-                      {isDragActive ? 'DROP TO IMPORT' : 'DRAG & DROP VIDEO'}
+                      {isDragActive ? 'DROP TO IMPORT' : 'TAP TO SELECT VIDEO'}
                     </p>
-                    <p className="text-neon-cyan/40 text-xs mt-1">MP4 · MOV · MKV · WEBM — up to 4K</p>
-                  </div>
-                  <div className="flex gap-2 mt-2">
-                    {['MP4', 'MOV', 'MKV', 'WEBM', 'AVI'].map(f => (
-                      <span key={f} className="neon-tag">{f}</span>
-                    ))}
+                    <p className="text-neon-cyan/40 text-xs mt-1">MP4 · MOV · MKV · WEBM — from camera roll or files</p>
                   </div>
                 </>
               )}

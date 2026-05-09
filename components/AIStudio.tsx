@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Copy, RefreshCw, Hash, FileText, Zap, ChevronDown, ChevronUp } from 'lucide-react'
 import HUDPanel from './HUDPanel'
 import toast from 'react-hot-toast'
+import { addXP, completeMission, unlockAchievement, getState } from '@/lib/game'
 
 interface Props {
   videoName?: string
@@ -44,6 +45,10 @@ export default function AIStudio({ videoName }: Props) {
       setContent(data)
       setExpandedSection('titles')
       toast.success('Content generated')
+      const s = getState()
+      addXP(20, 'AI content generated', { totalGenerations: s.totalGenerations + 1 })
+      completeMission('gen-content')
+      if (s.totalGenerations + 1 >= 5) unlockAchievement('ai-powered')
     } catch (e: any) {
       toast.error(e.message || 'Generation failed')
     } finally {

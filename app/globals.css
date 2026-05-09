@@ -400,3 +400,110 @@ html, body {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+
+/* ── Game / Glitch Animations ──────────────────── */
+@keyframes glitch {
+  0%, 85%, 100% { transform: translate(0); filter: none; }
+  87% { transform: translate(-3px, 1px); filter: hue-rotate(90deg); }
+  89% { transform: translate(3px, -1px); filter: hue-rotate(-90deg); }
+  91% { transform: translate(-2px, 2px); }
+  93% { transform: translate(0); filter: none; }
+}
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.4; }
+}
+
+@keyframes data-rain {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes level-burst {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+@keyframes xp-float {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-60px) scale(1.4); opacity: 0; }
+}
+
+@keyframes score-flash {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 255, 200, 0.3); }
+  50% { box-shadow: 0 0 30px rgba(0, 255, 200, 0.8), 0 0 60px rgba(0, 255, 200, 0.4); }
+}
+
+@keyframes corner-grow {
+  0% { width: 0; height: 0; }
+  100% { width: 12px; height: 12px; }
+}
+
+@keyframes hud-appear {
+  0% { opacity: 0; transform: scale(0.96) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── Glitch text effect ─────────────────────────── */
+.glitch {
+  animation: glitch 4s infinite;
+}
+
+.neon-flicker {
+  animation: neon-flicker 3s infinite;
+}
+
+/* ── Achievement flash overlay ─────────────────── */
+.achievement-flash {
+  animation: score-flash 0.6s ease-in-out;
+}
+
+/* ── Data stream columns (desktop only) ─────────── */
+.data-stream {
+  position: fixed;
+  top: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: rgba(0, 255, 200, 0.15);
+  pointer-events: none;
+  z-index: 1;
+  white-space: pre;
+  animation: data-rain linear infinite;
+}
+
+@media (max-width: 768px) {
+  .data-stream { display: none; }
+}
+
+/* ── HUD corner brackets (enhanced) ────────────── */
+.hud-panel::before {
+  animation: corner-grow 0.4s ease-out forwards;
+}
+
+/* ── Mission complete flash ─────────────────────── */
+@keyframes mission-complete {
+  0% { background: rgba(0, 255, 136, 0); }
+  30% { background: rgba(0, 255, 136, 0.15); }
+  100% { background: rgba(0, 255, 136, 0.05); }
+}
+
+.mission-done {
+  animation: mission-complete 0.5s ease-out forwards;
+}
+
+/* ── Score ring pulse ────────────────────────────── */
+@keyframes ring-appear {
+  0% { stroke-dashoffset: 200; }
+}
+
+/* ── Viral score colours ────────────────────────── */
+.score-fire { color: #00ffc8; text-shadow: 0 0 15px rgba(0,255,200,0.8); }
+.score-solid { color: #ffaa00; text-shadow: 0 0 15px rgba(255,170,0,0.8); }
+.score-weak { color: #ff4466; text-shadow: 0 0 15px rgba(255,68,102,0.8); }
+
+/* ── Bottom safe area on mobile ─────────────────── */
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }

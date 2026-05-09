@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Lightbulb, Trash2, CheckCircle, Circle, Sparkles, Tag } from 'lucide-react'
 import HUDPanel from './HUDPanel'
 import toast from 'react-hot-toast'
+import { addXP, completeMission, unlockAchievement, getState } from '@/lib/game'
 
 type IdeaStatus = 'idea' | 'scripted' | 'filmed' | 'done'
 
@@ -63,6 +64,11 @@ export default function IdeasBank() {
     save([idea, ...ideas])
     setTitle(''); setNotes(''); setTags(''); setShowForm(false)
     toast.success('Idea saved')
+    const s = getState()
+    addXP(10, 'Idea added', { totalIdeas: s.totalIdeas + 1 })
+    unlockAchievement('first-idea')
+    if (s.totalIdeas + 1 >= 10) unlockAchievement('idea-machine')
+    if (s.totalIdeas + 1 % 3 === 0) completeMission('add-3-ideas')
   }
 
   function addSuggested(t: string) {

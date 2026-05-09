@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, Copy, Download, ChevronDown, ChevronUp, Mic, Clapperboard } from 'lucide-react'
 import HUDPanel from './HUDPanel'
 import toast from 'react-hot-toast'
+import { addXP, completeMission, unlockAchievement, getState } from '@/lib/game'
 
 interface ScriptSection {
   title: string
@@ -48,6 +49,11 @@ export default function ScriptWriter() {
       setScript(data)
       setOpenSection('hook')
       toast.success('Script generated')
+      const s = getState()
+      addXP(30, 'Script written', { totalScripts: s.totalScripts + 1 })
+      completeMission('write-script')
+      if (platform === 'shorts') completeMission('plan-short')
+      unlockAchievement('first-script')
     } catch (e: any) {
       toast.error(e.message || 'Generation failed')
     } finally {

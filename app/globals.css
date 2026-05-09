@@ -2,37 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ══════════════════════════════════════════════════
-   THE CONTENT FORGE — Lord of the Rings Theme
-   Warm parchment, candlelight, elvish gold
-   ══════════════════════════════════════════════════ */
-
 :root {
   --gold: #c9a227;
   --gold-bright: #f0c040;
   --gold-dim: #7a5c10;
-  --gold-pale: #e8d48a;
   --amber: #e07b10;
   --amber-bright: #ff8c20;
   --parchment: #ede0b8;
   --parchment-mid: #c4a86a;
   --parchment-dim: #7a6040;
   --parchment-dark: #4a3820;
-  --forest: #2a4a2a;
   --shire: #4a7c59;
-  --ember: #e05510;
-  --burgundy: #6b1818;
   --ink: #0a0805;
   --panel: #130e06;
   --stone: #1e1a10;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  -webkit-tap-highlight-color: transparent;
-}
+* { box-sizing: border-box; padding: 0; margin: 0; -webkit-tap-highlight-color: transparent; }
 
 html, body {
   background: var(--ink);
@@ -41,295 +27,105 @@ html, body {
   max-width: 100vw;
 }
 
-/* Prevent iOS zoom */
 input, textarea, select, button { font-size: 16px; }
 
-/* ── Scrollbar ─────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: #0d0902; }
 ::-webkit-scrollbar-thumb { background: rgba(201,162,39,0.3); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(201,162,39,0.6); }
 
-/* ── Background Textures ──────────────────────── */
 .stone-texture {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.4;
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.4;
   background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 60px,
-      rgba(201,162,39,0.02) 60px,
-      rgba(201,162,39,0.02) 61px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 80px,
-      rgba(201,162,39,0.015) 80px,
-      rgba(201,162,39,0.015) 81px
-    );
+    repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(201,162,39,0.02) 60px, rgba(201,162,39,0.02) 61px),
+    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(201,162,39,0.015) 80px, rgba(201,162,39,0.015) 81px);
 }
 
 .vignette {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center,
-    transparent 40%,
-    rgba(5, 3, 0, 0.6) 100%
-  );
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(5,3,0,0.6) 100%);
 }
 
-/* ── Warm Orbs (candlelight) ─────────────────── */
-.orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none;
-  z-index: 0;
-  animation: slow-float 10s ease-in-out infinite;
-}
-.orb-1 {
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(201,162,39,0.07) 0%, transparent 70%);
-  top: -150px; left: -100px;
-  animation-duration: 12s;
-}
-.orb-2 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(74,124,89,0.06) 0%, transparent 70%);
-  bottom: -100px; right: -80px;
-  animation-duration: 15s; animation-delay: -5s;
-}
-.orb-3 {
-  width: 350px; height: 350px;
-  background: radial-gradient(circle, rgba(224,123,16,0.05) 0%, transparent 70%);
-  top: 40%; right: 15%;
-  animation-duration: 9s; animation-delay: -3s;
-}
+.orb { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; animation: slow-float 10s ease-in-out infinite; }
+.orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(201,162,39,0.07) 0%, transparent 70%); top: -150px; left: -100px; animation-duration: 12s; }
+.orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(74,124,89,0.06) 0%, transparent 70%); bottom: -100px; right: -80px; animation-duration: 15s; animation-delay: -5s; }
+.orb-3 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(224,123,16,0.05) 0%, transparent 70%); top: 40%; right: 15%; animation-duration: 9s; animation-delay: -3s; }
 
-/* ── Scroll / Parchment Panel ─────────────────── */
 .hud-panel {
-  background: rgba(19, 14, 6, 0.88);
-  border: 1px solid rgba(201, 162, 39, 0.2);
+  background: rgba(19,14,6,0.88);
+  border: 1px solid rgba(201,162,39,0.2);
   position: relative;
   backdrop-filter: blur(6px);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
-/* Scrollwork corners */
-.hud-panel::before,
-.hud-panel::after {
-  content: '✦';
-  position: absolute;
-  color: rgba(201, 162, 39, 0.4);
-  font-size: 10px;
-  line-height: 1;
-}
+.hud-panel::before, .hud-panel::after { content: '✦'; position: absolute; color: rgba(201,162,39,0.4); font-size: 10px; line-height: 1; }
 .hud-panel::before { top: 4px; left: 6px; }
 .hud-panel::after  { bottom: 4px; right: 6px; }
+.hud-panel:hover { border-color: rgba(201,162,39,0.35); box-shadow: 0 0 20px rgba(201,162,39,0.06); }
 
-.hud-panel:hover {
-  border-color: rgba(201, 162, 39, 0.35);
-  box-shadow: 0 0 20px rgba(201, 162, 39, 0.06), inset 0 0 30px rgba(0, 0, 0, 0.2);
-}
+.neon-text { color: var(--gold); text-shadow: 0 0 12px rgba(201,162,39,0.5), 0 0 24px rgba(201,162,39,0.2); font-family: 'Cinzel', serif; }
 
-/* ── Gold Text ─────────────────────────────────── */
-.neon-text {
-  color: var(--gold);
-  text-shadow: 0 0 12px rgba(201, 162, 39, 0.5), 0 0 24px rgba(201, 162, 39, 0.2);
-  font-family: 'Cinzel', serif;
-}
-.neon-text-purple {
-  color: var(--parchment-mid);
-  text-shadow: 0 0 10px rgba(196, 168, 106, 0.4);
-}
-.neon-text-pink {
-  color: var(--amber);
-  text-shadow: 0 0 10px rgba(224, 123, 16, 0.5);
-}
-
-/* ── Fellowship Button ─────────────────────────── */
 .glow-btn {
   position: relative;
-  background: rgba(19, 14, 6, 0.9);
-  border: 1px solid rgba(201, 162, 39, 0.35);
+  background: rgba(19,14,6,0.9);
+  border: 1px solid rgba(201,162,39,0.35);
   color: var(--gold);
   font-family: 'Cinzel', serif;
   letter-spacing: 0.05em;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-shadow: 0 0 8px rgba(201, 162, 39, 0.3);
-  box-shadow: 0 0 8px rgba(201, 162, 39, 0.08);
+  text-shadow: 0 0 8px rgba(201,162,39,0.3);
+  box-shadow: 0 0 8px rgba(201,162,39,0.08);
 }
-.glow-btn:hover {
-  background: rgba(201, 162, 39, 0.1);
-  border-color: rgba(201, 162, 39, 0.6);
-  box-shadow: 0 0 16px rgba(201, 162, 39, 0.2), inset 0 0 12px rgba(201, 162, 39, 0.05);
-  transform: translateY(-1px);
-}
+.glow-btn:hover { background: rgba(201,162,39,0.1); border-color: rgba(201,162,39,0.6); box-shadow: 0 0 16px rgba(201,162,39,0.2); transform: translateY(-1px); }
 .glow-btn:active { transform: translateY(0); }
+.glow-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.glow-btn-solid { background: rgba(201,162,39,0.12); border-color: rgba(201,162,39,0.45); }
+.glow-btn-solid:hover { background: rgba(201,162,39,0.2); }
+.glow-btn-danger { border-color: rgba(139,32,32,0.45); color: #e05550; }
 
-.glow-btn-purple {
-  border-color: rgba(196, 168, 106, 0.3);
-  color: var(--parchment-mid);
-}
-.glow-btn-purple:hover {
-  background: rgba(196, 168, 106, 0.08);
-  border-color: rgba(196, 168, 106, 0.5);
-  box-shadow: 0 0 16px rgba(196, 168, 106, 0.2);
-}
-.glow-btn-solid {
-  background: rgba(201, 162, 39, 0.12);
-  border-color: rgba(201, 162, 39, 0.45);
-}
-.glow-btn-solid:hover {
-  background: rgba(201, 162, 39, 0.2);
-}
-
-/* ── Candle Status Dot ────────────────────────── */
-.status-dot {
-  width: 7px;
-  height: 9px;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  display: inline-block;
-}
-.status-dot.online {
-  background: radial-gradient(ellipse, #ffcc44 0%, #ff8800 60%, #cc4400 100%);
-  box-shadow: 0 0 6px rgba(255, 180, 0, 0.8), 0 0 12px rgba(255, 100, 0, 0.4);
-  animation: candle-flicker 2.5s ease-in-out infinite;
-}
-.status-dot.offline {
-  background: #6b1818;
-  box-shadow: 0 0 4px rgba(107, 24, 24, 0.6);
-  border-radius: 50%;
-}
-.status-dot.pending {
-  background: var(--amber);
-  box-shadow: 0 0 6px rgba(224, 123, 16, 0.6);
-  border-radius: 50%;
-  animation: candle-flicker 0.8s step-end infinite;
-}
-
-/* ── Parchment Input ──────────────────────────── */
 .neon-input {
-  background: rgba(10, 8, 3, 0.8);
-  border: 1px solid rgba(201, 162, 39, 0.2);
+  background: rgba(10,8,3,0.8);
+  border: 1px solid rgba(201,162,39,0.2);
   color: var(--parchment);
   font-family: 'Lora', serif;
   outline: none;
   transition: all 0.3s ease;
 }
-.neon-input:focus {
-  border-color: rgba(201, 162, 39, 0.45);
-  box-shadow: 0 0 12px rgba(201, 162, 39, 0.1);
-  background: rgba(15, 11, 4, 0.9);
-}
-.neon-input::placeholder { color: rgba(201, 162, 39, 0.25); font-style: italic; }
+.neon-input:focus { border-color: rgba(201,162,39,0.45); box-shadow: 0 0 12px rgba(201,162,39,0.1); background: rgba(15,11,4,0.9); }
+.neon-input::placeholder { color: rgba(201,162,39,0.25); font-style: italic; }
 
 .neon-select {
-  background: rgba(10, 8, 3, 0.8);
-  border: 1px solid rgba(201, 162, 39, 0.2);
+  background: rgba(10,8,3,0.8);
+  border: 1px solid rgba(201,162,39,0.2);
   color: var(--parchment);
   font-family: 'Lora', serif;
   outline: none;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.neon-select:focus {
-  border-color: rgba(201, 162, 39, 0.45);
-  box-shadow: 0 0 12px rgba(201, 162, 39, 0.1);
-}
+.neon-select:focus { border-color: rgba(201,162,39,0.45); box-shadow: 0 0 12px rgba(201,162,39,0.1); }
 .neon-select option { background: #130e06; color: var(--parchment); }
 
-/* ── Scroll Tag / Badge ────────────────────────── */
 .neon-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 1px 7px;
-  background: rgba(201, 162, 39, 0.08);
-  border: 1px solid rgba(201, 162, 39, 0.25);
-  color: var(--gold);
-  font-size: 10px;
-  border-radius: 2px;
-  font-family: 'Cinzel', serif;
-  letter-spacing: 0.05em;
+  display: inline-flex; align-items: center; padding: 1px 7px;
+  background: rgba(201,162,39,0.08); border: 1px solid rgba(201,162,39,0.25);
+  color: var(--gold); font-size: 10px; border-radius: 2px;
+  font-family: 'Cinzel', serif; letter-spacing: 0.05em;
 }
 
-/* ── Ornate Divider ───────────────────────────── */
 .neon-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 162, 39, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(201,162,39,0.3), transparent);
   position: relative;
 }
-.neon-divider::after {
-  content: '❧';
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  color: rgba(201, 162, 39, 0.4);
-  font-size: 12px;
-  background: var(--ink);
-  padding: 0 6px;
-}
 
-/* ── Progress Bar (candlelight) ───────────────── */
-.neon-progress {
-  background: rgba(201, 162, 39, 0.08);
-  border: 1px solid rgba(201, 162, 39, 0.2);
-  border-radius: 2px;
-  overflow: hidden;
-}
-.neon-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright));
-  box-shadow: 0 0 8px rgba(201, 162, 39, 0.5);
-  transition: width 0.5s ease;
-}
+.neon-progress { background: rgba(201,162,39,0.08); border: 1px solid rgba(201,162,39,0.2); border-radius: 2px; overflow: hidden; }
+.neon-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--gold-bright)); box-shadow: 0 0 8px rgba(201,162,39,0.5); transition: width 0.5s ease; }
 
-/* ── Navigation Tab (Scroll style) ───────────── */
-.nav-tab {
-  position: relative;
-  padding: 10px 16px;
-  cursor: pointer;
-  color: rgba(201, 162, 39, 0.35);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-family: 'Cinzel', serif;
-  transition: all 0.2s ease;
-  border-left: 2px solid transparent;
-  white-space: nowrap;
-}
-.nav-tab:hover {
-  color: rgba(201, 162, 39, 0.65);
-  background: rgba(201, 162, 39, 0.04);
-  border-left-color: rgba(201, 162, 39, 0.3);
-}
-.nav-tab.active {
-  color: var(--gold);
-  background: rgba(201, 162, 39, 0.07);
-  border-left-color: var(--gold);
-  text-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
-}
+.status-dot { width: 7px; height: 9px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; display: inline-block; }
+.status-dot.online { background: radial-gradient(ellipse, #ffcc44 0%, #ff8800 60%, #cc4400 100%); box-shadow: 0 0 6px rgba(255,180,0,0.8); animation: candle-flicker 2.5s ease-in-out infinite; }
 
-/* ── Ticker ────────────────────────────────────── */
-@keyframes ticker {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.ticker-track {
-  display: flex;
-  animation: ticker 25s linear infinite;
-  white-space: nowrap;
-}
-
-/* ── Animations ────────────────────────────────── */
 @keyframes candle-flicker {
   0%, 100% { opacity: 1; transform: scaleY(1); }
   20% { opacity: 0.85; transform: scaleY(0.92) scaleX(1.06); }
@@ -344,59 +140,24 @@ input, textarea, select, button { font-size: 16px; }
   66% { transform: translateY(-8px) translateX(-5px); }
 }
 
-@keyframes slow-pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
 @keyframes rune-appear {
   0% { opacity: 0; transform: translateY(12px) scale(0.97); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@keyframes xp-float {
-  0% { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-55px) scale(1.3); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.animate-spin { animation: spin 1s linear infinite; }
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(201,162,39,0.3); }
+  50% { box-shadow: 0 0 20px rgba(201,162,39,0.7), 0 0 40px rgba(201,162,39,0.3); }
 }
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 
-@keyframes ember-rise {
-  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
-  10% { opacity: 1; }
-  80% { opacity: 0.7; }
-  100% { transform: translateY(-180px) translateX(20px) scale(0.3); opacity: 0; }
-}
-
-@keyframes leaf-drift {
-  0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.6; }
-  100% { transform: translateY(100vh) translateX(80px) rotate(360deg); opacity: 0; }
-}
-
-@keyframes ornament-glow {
-  0%, 100% { text-shadow: 0 0 4px rgba(201,162,39,0.3); }
-  50% { text-shadow: 0 0 10px rgba(201,162,39,0.7); }
-}
-
-/* ── Scroll entrance animation ─────────────────── */
-.scroll-in { animation: rune-appear 0.4s ease-out forwards; }
-
-/* ── Gold title glimmer ────────────────────────── */
 @keyframes title-glimmer {
   0%, 85%, 100% { text-shadow: 0 0 12px rgba(201,162,39,0.4); }
   90% { text-shadow: 0 0 20px rgba(240,192,64,0.8), 0 0 40px rgba(201,162,39,0.3); }
 }
 .title-glimmer { animation: title-glimmer 5s ease-in-out infinite; }
 
-/* ── Achievement/mission flash ─────────────────── */
-@keyframes warm-flash {
-  0% { background: rgba(201,162,39,0); }
-  30% { background: rgba(201,162,39,0.12); }
-  100% { background: rgba(201,162,39,0.05); }
-}
-.warm-flash { animation: warm-flash 0.5s ease-out forwards; }
-
-/* ── Mobile performance ────────────────────────── */
-@media (max-width: 768px) {
-  canvas { display: none !important; }
-  .orb { filter: blur(60px); }
-}
+@media (max-width: 768px) { .orb { filter: blur(60px); } }

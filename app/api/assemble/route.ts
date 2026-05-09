@@ -7,7 +7,6 @@ import { promisify } from 'util'
 
 const execAsync = promisify(exec)
 
-// Use local ffmpeg binary bundled in project, fall back to system PATH
 const FFMPEG = existsSync(join(process.cwd(), 'bin', 'ffmpeg.exe'))
   ? `"${join(process.cwd(), 'bin', 'ffmpeg.exe')}"`
   : 'ffmpeg'
@@ -20,7 +19,11 @@ interface Scene {
 }
 
 async function downloadFile(url: string, dest: string) {
-  if (url.startsWith('/')) {
+  if (url.startsWith('data:')) {
+    // Base64 data URL (Vercel fallback from voice route)
+    const base64 = url.split(',')[1]
+    await writeFile(dest, Buffer.from(base64, 'base64'))
+  } else if (url.startsWith('/')) {
     const localPath = join(process.cwd(), 'public', url)
     const data = await readFile(localPath)
     await writeFile(dest, data)
@@ -32,10 +35,15 @@ async function downloadFile(url: string, dest: string) {
 }
 
 export async function POST(req: NextRequest) {
+  // Assembly requires local ffmpeg — not available on Vercel
+  if (process.env.VERCEL) {
+    return NextResponse.json({ error: 'Video assembly only runs on the desktop app. Download your scenes and assemble locally.' }, { status: 400 })
+  }
+
   try {
     await execAsync(`${FFMPEG} -version`)
   } catch {
-    return NextResponse.json({ error: 'ffmpeg not found. Check the bin/ folder in the project.' }, { status: 400 })
+    return NextResponse.json({ error: 'ffmpeg not found in bin/ folder.' }, { status: 400 })
   }
 
   const { scenes, title }: { scenes: Scene[]; title: string } = await req.json()
@@ -78,19 +86,16 @@ export async function POST(req: NextRequest) {
     }
 
     const listPath = join(tmpDir, `list-${sessionId}.txt`)
-    const listContent = clipPaths.map(p => `file '${p.replace(/\\/g, '/')}'`).join('\n')
-    await writeFile(listPath, listContent)
+    await writeFile(listPath, clipPaths.map(p => `file '${p.replace(/\\/g, '/')}'`).join('\n'))
 
     const safeTitle = title.replace(/[^a-zA-Z0-9]/g, '-').slice(0, 40)
     const outputPath = join(videosDir, `${safeTitle}-${sessionId}.mp4`)
-
     await execAsync(`${FFMPEG} -y -f concat -safe 0 -i "${listPath}" -c copy "${outputPath}"`, { timeout: 120000 })
 
     for (const p of clipPaths) { try { await unlink(p) } catch {} }
     try { await unlink(listPath) } catch {}
 
     return NextResponse.json({ videoUrl: `/generated/videos/${safeTitle}-${sessionId}.mp4` })
-
   } catch (err: any) {
     return NextResponse.json({ error: err.message || 'Assembly failed' }, { status: 500 })
   }

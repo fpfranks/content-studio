@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "app/api/script/route.ts": { "maxDuration": 60 },
+    "app/api/image/route.ts":  { "maxDuration": 60 },
+    "app/api/voice/route.ts":  { "maxDuration": 60 }
+  }
+}

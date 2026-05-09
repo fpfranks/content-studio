@@ -9,79 +9,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        neon: {
-          cyan: '#00ffc8',
-          purple: '#7b2fff',
-          pink: '#ff2fff',
-          blue: '#0066ff',
-          green: '#00ff88',
-        },
-        dark: {
-          bg: '#050508',
-          panel: '#0a0a12',
-          border: 'rgba(0, 255, 200, 0.12)',
-          hover: 'rgba(0, 255, 200, 0.06)',
-        },
+        gold: { DEFAULT: '#c9a227', bright: '#f0c040', dim: '#7a5c10', pale: '#e8d48a' },
+        parchment: { DEFAULT: '#ede0b8', dim: '#9a8450', dark: '#5a4a28' },
+        ember: { DEFAULT: '#e07b10', bright: '#ff5500' },
+        forest: { DEFAULT: '#2a4a2a', bright: '#3d6e3d' },
+        stone: { DEFAULT: '#3a3028', dark: '#1a1410' },
+        shire: '#4a7c59',
+        burgundy: '#6b1818',
+        ink: '#0a0805',
+        // keep these so existing class refs don't break
+        neon: { cyan: '#c9a227', purple: '#7a5c10', pink: '#e07b10', blue: '#4a7c59', green: '#4a7c59' },
+        dark: { bg: '#0a0805', panel: '#130f06', border: 'rgba(201,162,39,0.15)', hover: 'rgba(201,162,39,0.05)' },
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
-      },
-      animation: {
-        'scanline': 'scanline 3s linear infinite',
-        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-        'float': 'float 6s ease-in-out infinite',
-        'blink': 'blink 1.2s step-end infinite',
-        'data-flow': 'data-flow 0.1s step-end infinite',
-        'border-flow': 'border-flow 3s linear infinite',
-        'grid-breathe': 'grid-breathe 4s ease-in-out infinite',
-        'type': 'typing 0.05s steps(1) forwards',
-        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
-        'slide-up': 'slide-up 0.4s ease-out forwards',
-        'fade-in': 'fade-in 0.3s ease-out forwards',
-      },
-      keyframes: {
-        scanline: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100vh)' },
-        },
-        'pulse-glow': {
-          '0%, 100%': { opacity: '0.4' },
-          '50%': { opacity: '1' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-12px)' },
-        },
-        blink: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0' },
-        },
-        'border-flow': {
-          '0%': { backgroundPosition: '0% 50%' },
-          '100%': { backgroundPosition: '200% 50%' },
-        },
-        'grid-breathe': {
-          '0%, 100%': { opacity: '0.3' },
-          '50%': { opacity: '0.6' },
-        },
-        'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(0, 255, 200, 0.3), 0 0 20px rgba(0, 255, 200, 0.1)' },
-          '50%': { boxShadow: '0 0 20px rgba(0, 255, 200, 0.6), 0 0 40px rgba(0, 255, 200, 0.2)' },
-        },
-        'slide-up': {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-      },
-      backgroundImage: {
-        'grid-pattern': 'linear-gradient(rgba(0, 255, 200, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 200, 0.05) 1px, transparent 1px)',
-      },
-      backgroundSize: {
-        'grid': '40px 40px',
+        heading: ['Cinzel', 'Georgia', 'serif'],
+        body: ['Lora', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono', 'Courier New', 'monospace'],
       },
     },
   },

@@ -13,85 +13,75 @@ export default function AnimatedBackground() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    const particles: { x: number; y: number; vx: number; vy: number; life: number; maxLife: number }[] = []
+    type Ember = { x: number; y: number; vx: number; vy: number; size: number; life: number; maxLife: number; bright: boolean }
 
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        life: Math.random() * 200,
-        maxLife: 150 + Math.random() * 100,
-      })
+    const embers: Ember[] = []
+
+    function spawn(): Ember {
+      return {
+        x: Math.random() * canvas!.width,
+        y: canvas!.height + 10,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: -(0.4 + Math.random() * 0.8),
+        size: 0.8 + Math.random() * 2.2,
+        life: 0,
+        maxLife: 120 + Math.random() * 180,
+        bright: Math.random() > 0.8,
+      }
     }
 
-    let frame = 0
+    for (let i = 0; i < 50; i++) {
+      const e = spawn()
+      e.y = Math.random() * canvas.height
+      e.life = Math.random() * e.maxLife
+      embers.push(e)
+    }
+
     let animId: number
 
     function draw() {
       if (!ctx || !canvas) return
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      frame++
 
-      particles.forEach((p, i) => {
-        p.x += p.vx
-        p.y += p.vy
-        p.life++
+      if (Math.random() > 0.7 && embers.length < 80) embers.push(spawn())
 
-        if (p.life > p.maxLife || p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
-          particles[i] = {
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            life: 0,
-            maxLife: 150 + Math.random() * 100,
-          }
-          return
+      for (let i = embers.length - 1; i >= 0; i--) {
+        const e = embers[i]
+        e.x += e.vx + Math.sin(e.life * 0.03) * 0.3
+        e.y += e.vy
+        e.life++
+
+        if (e.life > e.maxLife || e.y < -20) {
+          embers.splice(i, 1)
+          continue
         }
 
-        const alpha = Math.sin((p.life / p.maxLife) * Math.PI) * 0.5
-        const size = 1 + Math.sin((p.life / p.maxLife) * Math.PI) * 1.5
+        const progress = e.life / e.maxLife
+        const alpha = Math.sin(progress * Math.PI) * (e.bright ? 0.9 : 0.45)
+        const flicker = e.bright ? 0.7 + Math.sin(e.life * 0.3) * 0.3 : 1
 
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0, 255, 200, ${alpha})`
-        ctx.fill()
-
-        ctx.shadowBlur = 6
-        ctx.shadowColor = 'rgba(0, 255, 200, 0.5)'
-        ctx.fill()
-        ctx.shadowBlur = 0
-      })
-
-      // Connect nearby particles
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < 120) {
-            const alpha = (1 - dist / 120) * 0.08
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(0, 255, 200, ${alpha})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
+        const grad = ctx.createRadialGradient(e.x, e.y, 0, e.x, e.y, e.size * 3)
+        if (e.bright) {
+          grad.addColorStop(0, `rgba(255, 220, 80, ${alpha * flicker})`)
+          grad.addColorStop(0.4, `rgba(255, 130, 20, ${alpha * 0.6 * flicker})`)
+          grad.addColorStop(1, 'rgba(180, 60, 0, 0)')
+        } else {
+          grad.addColorStop(0, `rgba(220, 140, 30, ${alpha})`)
+          grad.addColorStop(0.5, `rgba(180, 80, 10, ${alpha * 0.5})`)
+          grad.addColorStop(1, 'rgba(140, 40, 0, 0)')
         }
-      }
 
-      // Horizontal data lines
-      if (frame % 120 === 0) {
-        const y = Math.random() * canvas.height
         ctx.beginPath()
-        ctx.moveTo(0, y)
-        ctx.lineTo(canvas.width * Math.random(), y)
-        ctx.strokeStyle = 'rgba(0, 255, 200, 0.15)'
-        ctx.lineWidth = 1
-        ctx.stroke()
+        ctx.arc(e.x, e.y, e.size * 3, 0, Math.PI * 2)
+        ctx.fillStyle = grad
+        ctx.fill()
+
+        ctx.beginPath()
+        ctx.arc(e.x, e.y, e.size * flicker, 0, Math.PI * 2)
+        ctx.fillStyle = e.bright
+          ? `rgba(255, 240, 120, ${alpha * flicker})`
+          : `rgba(220, 160, 40, ${alpha})`
+        ctx.fill()
       }
 
       animId = requestAnimationFrame(draw)
@@ -100,21 +90,15 @@ export default function AnimatedBackground() {
     draw()
 
     const onResize = () => {
+      if (!canvas) return
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
     }
     window.addEventListener('resize', onResize)
-
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', onResize)
-    }
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', onResize) }
   }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none opacity-60"
-    />
+    <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" style={{ opacity: 0.65 }} />
   )
 }

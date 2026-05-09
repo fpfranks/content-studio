@@ -11,12 +11,12 @@ export interface GameState {
 }
 
 export const LEVELS = [
-  { min: 0,    max: 99,   title: 'Content Rookie',  color: '#4d8070' },
-  { min: 100,  max: 299,  title: 'Creator',          color: '#00ffc8' },
-  { min: 300,  max: 699,  title: 'Going Viral',      color: '#7b2fff' },
-  { min: 700,  max: 1499, title: 'Content Machine',  color: '#ff2fff' },
-  { min: 1500, max: 2999, title: 'Viral Pro',        color: '#ffaa00' },
-  { min: 3000, max: Infinity, title: 'Content God',  color: '#ff4466' },
+  { min: 0,    max: 99,   title: 'Hobbit of the Shire',  color: '#4a7c59' },
+  { min: 100,  max: 299,  title: 'Wandering Ranger',      color: '#c9a227' },
+  { min: 300,  max: 699,  title: 'Rider of Rohan',        color: '#e07b10' },
+  { min: 700,  max: 1499, title: 'Knight of Gondor',      color: '#c9a227' },
+  { min: 1500, max: 2999, title: 'Elf-Lord of Content',   color: '#f0c040' },
+  { min: 3000, max: Infinity, title: 'Bearer of the Ring', color: '#ff8c20' },
 ]
 
 export const ACHIEVEMENTS = [
